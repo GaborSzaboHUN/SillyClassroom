@@ -8,22 +8,20 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 let sillyNames = [];
+let lastClassSizeText = null;
+let lastGrade = null;
 
+function handleNewClass(classSizeText, grade, res) {
+    if (!classSizeText || !grade) {
+        return res.redirect('/');
+    }
 
-
-app.get('/', (req, res) => {
-    res.render('index.ejs', { sillyNames });
-});
-
-
-
-app.post('/newclass', (req, res) => {
-    const classSizeText = req.body.class_size;
-    const grade = req.body.grade;
+    lastClassSizeText = classSizeText;
+    lastGrade = grade;
 
     let classSize;
-
     if (classSizeText === "small") {
         classSize = randomInt(1, 5);
     } else if (classSizeText === "medium") {
@@ -40,7 +38,25 @@ app.post('/newclass', (req, res) => {
     }));
 
     res.render('index.ejs', { sillyNames, classSizeText, grade });
+}
+
+
+
+app.get('/', (req, res) => {
+    res.render('index.ejs', { sillyNames });
+});
+
+
+
+app.post('/newclass', (req, res) => {
+    handleNewClass(req.body.class_size, req.body.grade, res);
 })
+
+
+
+app.post('/reload', (req, res) => {
+    handleNewClass(lastClassSizeText, lastGrade, res);
+});
 
 
 

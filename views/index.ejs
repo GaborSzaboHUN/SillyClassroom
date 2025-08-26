@@ -1,7 +1,12 @@
-<h1>Classroom Generator</h1>
+<h1>Silly-name Classroom Generator</h1>
 
 <% if (sillyNames.length) { %>
-    <h2>Recently created classroom</h2>
+    <h2>Your silly classroom</h2>
+
+    <form action="/reload" method="post">
+        <button type="submit">Reload Classroom</button>
+    </form>
+
     <ul>
         <% sillyNames.forEach(({ name, age })=> { %>
             <li>Name: <%= name %>, Age: <%= age %> years old</li>
