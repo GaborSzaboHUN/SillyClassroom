@@ -1,0 +1,40 @@
+<h1>Classroom Generator</h1>
+
+<% if (sillyNames.length) { %>
+    <h2>Recently created classroom</h2>
+    <ul>
+        <% sillyNames.forEach(({ name, age })=> { %>
+            <li>Name: <%= name %>, Age: <%= age %> years old</li>
+            <% }); %>
+    </ul>
+
+    <p>Download the roster:</p>
+    <a href="/download/json">JSON</a> |
+    <a href="/download/txt">TXT</a>
+
+    <form action="/reset" method="GET">
+        <button type="submit">Create a new classroom</button>
+    </form>
+
+    <% } else { %>
+        <form action="/newclass" method="POST">
+            <select name="class_size" required>
+                <option value="">Select class size</option>
+                <option value="small">Small (1-5)</option>
+                <option value="medium">Medium (6-10)</option>
+                <option value="large">Large (11+)</option>
+            </select>
+
+            <select name="grade" required>
+                <option value="">Select grade</option>
+                <% for(let i=1; i<=12; i++){ %>
+                    <option value="<%= i %>">
+                        <%= i %>
+                            <%= (i===1?'st':i===2?'nd':i===3?'rd':'th') %> Grade
+                    </option>
+                    <% } %>
+            </select>
+
+            <button type="submit">Create Classroom</button>
+        </form>
+        <% } %>
