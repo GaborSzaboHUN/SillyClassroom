@@ -7,5 +7,6 @@ To start a program locally you need to do the following steps:
 - run `npm install` - to install all dependencies
 - If your `package.json` does not contain `"type": "module"`, add it to handle ES module imports in app.js.
 - Start the program by running `node app.js` in the terminal.
+- In your browser go to `http://localhost:3000/`
 
 - You're all set! Enjoy using SillyClassroom.
